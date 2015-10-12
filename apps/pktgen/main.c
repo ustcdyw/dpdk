@@ -641,7 +641,7 @@ main_loop(__attribute__((unused)) void *arg)
 				struct rte_mbuf *m = pkts_burst[i];
 				uint64_t len = rte_pktmbuf_data_len(m);
 				lcore_stats[lcore_id].rx_bytes += len;
-				//dump_packet(m->pkt.data, len);
+				//dump_packet(rte_pktmbuf_mtod(m, void *), len);
 				rte_pktmbuf_free(m);
 			}
 
@@ -673,19 +673,19 @@ main_loop(__attribute__((unused)) void *arg)
 					m = rte_pktmbuf_alloc(pktmbuf_pool);
 				} while (unlikely(m == NULL));
 
-				if (unlikely(!((*build_packet)(m->pkt.data,
-							       &pkt_size,
-							       &seed)))) {
+				if (unlikely(!((*build_packet)(
+						rte_pktmbuf_mtod(m, void *),
+						&pkt_size, &seed)))) {
 					rte_pktmbuf_free(m);
 					burst_size = i;
 					looping = false;
 					break;
 				}
 
-				m->pkt.nb_segs = 1;
-				m->pkt.next = NULL;
-				m->pkt.pkt_len  = pkt_size;
-				m->pkt.data_len = pkt_size;
+				m->nb_segs = 1;
+				m->next = NULL;
+				m->pkt_len  = pkt_size;
+				m->data_len = pkt_size;
 
 				pkts_burst[i] = m;
 				lcore_stats[lcore_id].tx_bytes += pkt_size;
