@@ -172,7 +172,7 @@ static const struct rte_eth_conf port_conf = {
 	.rx_adv_conf = {
 		.rss_conf = {
 			.rss_key = NULL,
-			.rss_hf = ETH_RSS_IPV4 | ETH_RSS_IPV4_UDP,
+			.rss_hf = ETH_RSS_IPV4,
 		},
 	},
 	.txmode = {
