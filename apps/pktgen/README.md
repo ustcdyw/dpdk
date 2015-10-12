@@ -2,16 +2,12 @@
 Usage
 =====
 
-Prepare the DPDK environment
-
-	sudo tools/prepare.sh
-
 Build and run this application
 
 	make RTE_SDK=/path/to/dpdk-sdk RTE_TARGET=build
-	sudo ./pktgen -c fff -n 4 -- -c config -b 1 -f tx              # Send udp packet
-	sudo ./pktgen -c fff -n 4 -- -c config -b 1 -f tx -t tracelist # Send tcp packet from pcap file.
-	sudo ./pktfen -c fff -n 4 -- -c config -b 1 -f rx
+	sudo ./build/pktgen -c fff -n 4 -- -c config -b 1 -f tx              # Send udp packet
+	sudo ./build/pktgen -c fff -n 4 -- -c config -b 1 -f tx -t tracelist # Send tcp packet from pcap file.
+	sudo ./build/pktfen -c fff -n 4 -- -c config -b 1 -f rx
 
 
 TODO
