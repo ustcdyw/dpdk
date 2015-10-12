@@ -38,11 +38,6 @@ RTE_TARGET ?= x86_64-default-linuxapp-gcc
 
 include $(RTE_SDK)/mk/rte.vars.mk
 
-ifneq ($(CONFIG_RTE_EXEC_ENV),"linuxapp")
-$(error This application can only operate in a linuxapp environment, \
-please change the definition of the RTE_TARGET environment variable)
-endif
-
 # binary name
 APP = pktgen
 
