@@ -226,6 +226,9 @@ static enum {
 
 static struct timeval last_time[RTE_MAX_LCORE] __attribute__((aligned(64)));
 
+static bool npkt_limit = false;
+
+static uint64_t opt_pkt_nb    = 0;
 static int32_t opt_pkt_size   = 60;
 static int32_t opt_burst_size = 3;
 static int32_t opt_loop_count = 0;
@@ -655,6 +658,14 @@ main_loop(__attribute__((unused)) void *arg)
 				lcore_stats[lcore_id].rx_bytes = 0;
 				num_cnt = 0;
 			}
+			if (npkt_limit) {
+				opt_pkt_nb -= nb_rx;
+				if (opt_pkt_nb <= 0) {
+					if (lcore_id == 0)
+						print_stats();
+					exit(EXIT_SUCCESS);
+				}
+			}
 		}
 	} else {
 		PRINT_INFO("Lcore %u is writing to port %u, queue %u",
@@ -1005,8 +1016,12 @@ parse_args(int argc, char **argv)
 	opterr = 0;
 
 	/* Parse command line */
-	while ((opt = getopt(argc, argv, "f:t:p:b:l:i:c:h")) != -1) {
+	while ((opt = getopt(argc, argv, "n:f:t:p:b:l:i:c:h")) != -1) {
 		switch (opt) {
+		case 'n':
+			sscanf(optarg, "%llu", (unsigned long long *)&opt_pkt_nb);
+			npkt_limit = (opt_pkt_nb > 0);
+			break;
 		case 'f':
 			if (strcmp(optarg, "tx") == 0)
 				func = TX;

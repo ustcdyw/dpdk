@@ -8,9 +8,14 @@
 core_id=0,port_id=0,queue_id=0 # Cpu0 manages the queue 0 of NIC-0
 core_id=1,port_id=0,queue_id=1
 core_id=2,port_id=0,queue_id=2
+core_id=3,port_id=0,queue_id=3
+core_id=4,port_id=0,queue_id=4 # Cpu0 manages the queue 0 of NIC-0
+core_id=5,port_id=0,queue_id=5
+core_id=6,port_id=0,queue_id=6
+core_id=7,port_id=0,queue_id=7
 
 # Settings for NIC-1
-core_id=3,port_id=1,queue_id=0
-core_id=4,port_id=1,queue_id=1
-core_id=5,port_id=1,queue_id=2
+#core_id=3,port_id=1,queue_id=0
+#core_id=4,port_id=1,queue_id=1
+#core_id=5,port_id=1,queue_id=2
 
